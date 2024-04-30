@@ -1,0 +1,45 @@
+.container {
+  font-family: Arial, sans-serif;
+}
+
+.item-per-page{
+  width: 100%;
+  padding: 14px;
+  box-sizing: border-box;
+  margin: 5px 0 16px 0;
+  display: flex;
+  justify-content: end;
+  font-size: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+th {
+  border-top: 1px solid #ddd;
+}
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+th:first-child,
+td:first-child {
+  border-left: 1px solid #ddd;
+}
+
+th {
+  position: relative;
+}
+
+.even-row {
+  background-color: #f9f9f9;
+}
+
+.odd-row {
+  background-color: #fff;
+}

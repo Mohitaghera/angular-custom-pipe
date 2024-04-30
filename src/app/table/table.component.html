@@ -1,0 +1,42 @@
+<div class="container">
+  <form class="item-per-page">
+    <label for="perPage">Item per page : </label>
+    <select id="perPage" [(ngModel)]="itemsPerPage" [ngModelOptions]="{standalone: true}" (change)="onPageChange(1)" >
+      <option value="5" [ngValue]=5 selected>5</option>
+      <option value="10" [ngValue]=10>10</option>
+      <option value="15" [ngValue]=15>15</option>
+      <option value="20" [ngValue]=20>20</option>
+    </select>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let emp of employees | pagination : currentPage : itemsPerPage;
+          let i = index
+        "
+        [ngClass]="{ 'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0 }"
+      >
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.employee_name }}</td>
+        <td>{{ emp.employee_salary | salary }}</td>
+        <td>{{ emp.employee_age }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-pagination
+    [totalPages]="totalPages"
+    [currentPage]="currentPage"
+    [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+</div>
