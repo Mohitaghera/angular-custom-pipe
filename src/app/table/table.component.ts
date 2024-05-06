@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from './pagination/pagination.component';
 import { PaginationPipe } from '../pagination.pipe';
 import { SalaryPipe } from '../salary.pipe';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -20,13 +21,16 @@ import { SalaryPipe } from '../salary.pipe';
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit,OnDestroy {
+
 
   employees: any[] = [];
   showEmployees: any[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number[] = [];
+
+  employeesSub! : Subscription ;
 
   constructor(private http: HttpClient) {}
 
@@ -36,7 +40,7 @@ export class TableComponent implements OnInit {
   }
 
   fetchEmployees() {
-    this.http
+   this.employeesSub =  this.http
       .get<any>('https://dummy.restapiexample.com/api/v1/employees')
       .subscribe((data) => {
         this.employees = data.data;
@@ -55,6 +59,9 @@ export class TableComponent implements OnInit {
     for (let i = 1; i <= length; i++) {
       this.totalPages.push(i);
     }
+  }
+  ngOnDestroy(): void {
+      this.employeesSub?.unsubscribe();
   }
 
 }
